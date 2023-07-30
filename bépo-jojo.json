@@ -51,11 +51,11 @@
       "KC_LGUI",
       "LALT_T(KC_SPC)",
       "LT(3,KC_8)",
-      "LT(4,KC_NO)",
-      "LT(2,KC_ENT)",
-      "LT(1,KC_6)",
+      "LT(4,KC_DEL)",
+      "LT(2,KC_BSPC)",
+      "LT(1,KC_ENT)",
       "RSFT_T(KC_SPC)",
-      "KC_BSPC",
+      "KC_6",
       "KC_NO"
     ],
     [
