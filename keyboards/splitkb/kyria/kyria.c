@@ -41,6 +41,7 @@ bool oled_task_kb(void) {
 #elif defined(KEYBOARD_splitkb_kyria_rev2)
         oled_write_P(PSTR("rev2\n\n"), false);
 #elif defined(KEYBOARD_splitkb_kyria_rev3)
+
         oled_write_P(PSTR("rev3\n\n"), false);
 #endif
         // Host Keyboard Layer Status
