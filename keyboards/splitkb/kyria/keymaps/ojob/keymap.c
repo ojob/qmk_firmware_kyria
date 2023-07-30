@@ -47,7 +47,7 @@ enum layers {
 };
 
 // Aliases for readability
-#define VERSION  "2023-07-30.09"  // 13 caractères
+#define VERSION  "2023-07-30.10"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[0] = LAYOUT(KC_ESC, KC_B, KC_2, KC_P, KC_O, KC_7, KC_Z, KC_V, KC_D, KC_L, KC_J, KC_W, LT(5,KC_TAB), KC_Q, KC_U, KC_I, KC_E, KC_M, KC_C, KC_T, KC_S, KC_R, KC_N, KC_SCLN, LCTL_T(KC_DEL), KC_0, KC_Y, KC_X, KC_LT, KC_K, KC_NO, KC_NO, KC_NO, MO(6), KC_4, KC_A, KC_G, KC_H, KC_F, RCTL_T(KC_ENT), KC_LSFT, KC_LGUI, LALT_T(KC_8), LT(3,KC_SPC), LT(4,KC_DEL), LT(2,KC_BSPC), LT(1,KC_SPC), RSFT_T(KC_ENT), KC_6, KC_NO),
