@@ -15,27 +15,6 @@
  */
 #include QMK_KEYBOARD_H
 
-enum layers {
-    _BÉPO = 0,
-    _ACCENTS,
-    _SYMBOLS,
-    _NAV,
-    _FUNCTION,
-    _ADJUST,
-};
-
-// Aliases for readability
-#define VERSION  "2023-07-30.03"  // 13 caractères
-
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-	[0] = LAYOUT(KC_ESC, KC_B, KC_2, KC_P, KC_O, KC_7, KC_Z, KC_V, KC_D, KC_L, KC_J, KC_W, LT(4,KC_TAB), KC_Q, KC_U, KC_I, KC_E, KC_M, KC_C, KC_T, KC_S, KC_R, KC_N, KC_SCLN, LCTL_T(KC_DEL), KC_0, KC_Y, KC_X, KC_LT, KC_K, KC_NO, KC_NO, MO(5), KC_NO, KC_4, KC_A, KC_G, KC_H, KC_F, RCTL_T(KC_ENT), KC_LALT, KC_LGUI, LSFT_T(KC_SPC), LT(3,KC_8), KC_NO, MO(2), LT(1,KC_6), RSFT_T(KC_SPC), KC_BSPC, KC_NO),
-	[1] = LAYOUT(KC_TRNS, KC_3, KC_NO, KC_QUES, KC_NO, KC_NO, KC_NO, KC_NO, KC_RBRC, KC_NO, KC_NO, KC_NO, KC_TRNS, RALT(KC_0), KC_QUOT, KC_LCBR, RGUI(KC_E), KC_COMM, KC_9, KC_SLSH, RALT(KC_NO), KC_NO, RALT(KC_3), KC_NO, KC_TRNS, KC_NO, KC_NO, KC_LBRC, KC_DOT, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, RSFT(KC_M), KC_UNDS, KC_NO, KC_NO, KC_TRNS, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO),
-	[2] = LAYOUT(KC_TRNS, KC_NUBS, LSFT(KC_NUBS), RALT(KC_5), RALT(KC_MINS), KC_NO, RSFT(KC_QUOT), LSFT(KC_7), LSFT(KC_8), LSFT(KC_9), RALT(KC_3), KC_EQL, KC_TRNS, RALT(KC_6), KC_5, KC_1, KC_MINS, RALT(KC_7), KC_PSLS, LSFT(KC_4), LSFT(KC_5), LSFT(KC_6), KC_6, KC_PAST, KC_TRNS, KC_DOT, RALT(KC_8), KC_4, KC_EQL, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_M, LSFT(KC_1), LSFT(KC_2), LSFT(KC_3), LSFT(KC_EQL), KC_TRNS, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PDOT, LSFT(KC_0), KC_NO),
-	[3] = LAYOUT(KC_TRNS, KC_NO, KC_BTN1, KC_MS_U, KC_BTN2, KC_ACL2, KC_INS, KC_HOME, KC_UP, KC_END, KC_NO, KC_NO, KC_TRNS, KC_WH_U, KC_MS_L, KC_MS_D, KC_MS_R, KC_ACL1, KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGUP, KC_NO, KC_TRNS, KC_WH_D, KC_WH_L, KC_NO, KC_WH_R, KC_ACL0, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, RCTL(KC_LEFT), KC_NO, RCTL(KC_RGHT), KC_PGDN, KC_TRNS, KC_NO, KC_TRNS, KC_NO, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO),
-	[4] = LAYOUT(KC_TRNS, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_TRNS, KC_F1, KC_NO, KC_NO, LCTL(KC_F5), LCTL(KC_F6), KC_NO, KC_NO, KC_NO, KC_NO, LALT(KC_F11), KC_NO, KC_TRNS, KC_NO, KC_CUT, KC_COPY, KC_PSTE, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_TRNS, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO),
-	[5] = LAYOUT(RGB_HUI, RGB_SAI, RGB_SPI, RGB_MOD, RGB_VAI, KC_NO, KC_BRIU, KC_VOLU, KC_MNXT, KC_NO, KC_NO, KC_NO, RGB_HUD, RGB_SAD, RGB_SPD, RGB_RMOD, RGB_VAD, KC_NO, KC_BRID, KC_VOLD, KC_MPLY, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, RGB_TOG, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_MUTE, KC_MSTP, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO)
-};
-
 // clang-format off
 static const char PROGMEM qmk_logo[] = {
     0x80,0x81,0x82,0x83,0x84,0x85,0x86,0x87,0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x8f,0x90,0x91,0x92,0x93,0x94,
@@ -57,6 +36,29 @@ static const char PROGMEM kyria_logo[] = {
 };
 // clang-format on
 
+enum layers {
+    _BÉPO = 0,
+    _ACCENTS,
+    _SYMBOLES,
+    _FLÈCHES,
+    _SOURIS,
+    _FONCTIONS,
+    _ADJUST,
+};
+
+// Aliases for readability
+#define VERSION  "2023-07-30.05"  // 13 caractères
+
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+	[0] = LAYOUT(KC_ESC, KC_B, KC_2, KC_P, KC_O, KC_7, KC_Z, KC_V, KC_D, KC_L, KC_J, KC_W, LT(5,KC_TAB), KC_Q, KC_U, KC_I, KC_E, KC_M, KC_C, KC_T, KC_S, KC_R, KC_N, KC_SCLN, LCTL_T(KC_DEL), KC_0, KC_Y, KC_X, KC_LT, KC_K, KC_NO, KC_NO, KC_NO, MO(6), KC_4, KC_A, KC_G, KC_H, KC_F, RCTL_T(KC_ENT), KC_LALT, KC_LGUI, LSFT_T(KC_SPC), LT(3,KC_8), LT(4,KC_NO), LT(2,KC_ENT), LT(1,KC_6), RSFT_T(KC_SPC), KC_BSPC, KC_NO),
+	[1] = LAYOUT(KC_TRNS, KC_3, KC_NO, KC_QUES, KC_NO, KC_NO, KC_NO, KC_NO, KC_RBRC, KC_NO, KC_NO, KC_NO, KC_TRNS, RALT(KC_0), KC_QUOT, KC_LCBR, RALT(KC_E), KC_COMM, KC_9, KC_SLSH, RALT(KC_3), KC_NO, RALT(KC_2), KC_NO, KC_TRNS, KC_NO, KC_NO, KC_LBRC, KC_DOT, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, RSFT(KC_M), KC_UNDS, KC_NO, KC_NO, KC_TRNS, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO),
+	[2] = LAYOUT(KC_TRNS, KC_NUBS, LSFT(KC_NUBS), RALT(KC_5), RALT(KC_MINS), KC_NO, RSFT(KC_QUOT), LSFT(KC_7), LSFT(KC_8), LSFT(KC_9), RALT(KC_3), KC_EQL, KC_TRNS, RALT(KC_6), KC_5, KC_1, KC_MINS, RALT(KC_7), KC_PSLS, LSFT(KC_4), LSFT(KC_5), LSFT(KC_6), KC_6, KC_PAST, KC_TRNS, KC_DOT, RGUI(KC_8), RALT(KC_4), RALT(KC_EQL), KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_M, LSFT(KC_1), LSFT(KC_2), LSFT(KC_3), LSFT(KC_EQL), KC_TRNS, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PDOT, LSFT(KC_0), KC_NO),
+	[3] = LAYOUT(KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_INS, KC_HOME, KC_UP, KC_END, KC_NO, KC_NO, KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGUP, KC_NO, KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, RCTL(KC_LEFT), KC_NO, RCTL(KC_RGHT), KC_PGDN, KC_TRNS, KC_NO, KC_TRNS, KC_NO, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO),
+	[4] = LAYOUT(KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_ACL2, KC_BTN2, KC_MS_U, KC_BTN3, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_ACL1, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_U, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_ACL0, KC_WH_L, KC_NO, KC_WH_R, KC_WH_D, KC_NO, KC_NO, KC_NO, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BTN1, KC_NO, KC_NO),
+	[5] = LAYOUT(KC_TRNS, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_TRNS, KC_F1, KC_NO, KC_NO, LCTL(KC_F5), LCTL(KC_F6), KC_NO, KC_NO, KC_NO, KC_NO, LALT(KC_F11), KC_NO, KC_TRNS, KC_NO, KC_CUT, KC_COPY, KC_PSTE, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_TRNS, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO),
+	[6] = LAYOUT(RGB_HUI, RGB_SAI, RGB_SPI, RGB_MOD, RGB_VAI, KC_NO, KC_BRIU, KC_VOLU, KC_MNXT, KC_NO, KC_NO, KC_NO, RGB_HUD, RGB_SAD, RGB_SPD, RGB_RMOD, RGB_VAD, KC_NO, KC_BRID, KC_VOLD, KC_MPLY, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, RGB_TOG, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_MUTE, KC_MSTP, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO)
+};
+
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
         oled_write_P(qmk_logo, false);
@@ -77,14 +79,17 @@ bool oled_task_user(void) {
             case _ACCENTS:
                 oled_write_P(PSTR("accents\n"), false);
                 break;
-            case _SYMBOLS:
+            case _SYMBOLES:
                 oled_write_P(PSTR("chiffres & symboles\n"), false);
                 break;
-            case _NAV:
-                oled_write_P(PSTR("nav\n"), false);
+            case _FLÈCHES:
+                oled_write_P(PSTR("fleches\n"), false);
                 break;
-            case _FUNCTION:
-                oled_write_P(PSTR("fonction\n"), false);
+            case _SOURIS:
+                oled_write_P(PSTR("souris\n"), false);
+                break;
+            case _FONCTIONS:
+                oled_write_P(PSTR("fonctions\n"), false);
                 break;
             case _ADJUST:
                 oled_write_P(PSTR("adjust\n"), false);
@@ -102,4 +107,4 @@ bool oled_task_user(void) {
         oled_write_raw_P(kyria_logo, sizeof(kyria_logo));
     }
     return false;
-}
+};
