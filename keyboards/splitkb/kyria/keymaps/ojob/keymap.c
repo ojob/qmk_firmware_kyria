@@ -47,10 +47,10 @@ enum layers {
 };
 
 // Aliases for readability
-#define VERSION  "2023-07-30.05"  // 13 caractères
+#define VERSION  "2023-07-30.07"  // 13 caractères
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-	[0] = LAYOUT(KC_ESC, KC_B, KC_2, KC_P, KC_O, KC_7, KC_Z, KC_V, KC_D, KC_L, KC_J, KC_W, LT(5,KC_TAB), KC_Q, KC_U, KC_I, KC_E, KC_M, KC_C, KC_T, KC_S, KC_R, KC_N, KC_SCLN, LCTL_T(KC_DEL), KC_0, KC_Y, KC_X, KC_LT, KC_K, KC_NO, KC_NO, KC_NO, MO(6), KC_4, KC_A, KC_G, KC_H, KC_F, RCTL_T(KC_ENT), KC_LALT, KC_LGUI, LSFT_T(KC_SPC), LT(3,KC_8), LT(4,KC_NO), LT(2,KC_ENT), LT(1,KC_6), RSFT_T(KC_SPC), KC_BSPC, KC_NO),
+	[0] = LAYOUT(KC_ESC, KC_B, KC_2, KC_P, KC_O, KC_7, KC_Z, KC_V, KC_D, KC_L, KC_J, KC_W, LT(5,KC_TAB), KC_Q, KC_U, KC_I, KC_E, KC_M, KC_C, KC_T, KC_S, KC_R, KC_N, KC_SCLN, LCTL_T(KC_DEL), KC_0, KC_Y, KC_X, KC_LT, KC_K, KC_NO, KC_NO, KC_NO, MO(6), KC_4, KC_A, KC_G, KC_H, KC_F, RCTL_T(KC_ENT), KC_LSFT, KC_LGUI, LALT_T(KC_SPC), LT(3,KC_8), LT(4,KC_NO), LT(2,KC_ENT), LT(1,KC_6), RSFT_T(KC_SPC), KC_BSPC, KC_NO),
 	[1] = LAYOUT(KC_TRNS, KC_3, KC_NO, KC_QUES, KC_NO, KC_NO, KC_NO, KC_NO, KC_RBRC, KC_NO, KC_NO, KC_NO, KC_TRNS, RALT(KC_0), KC_QUOT, KC_LCBR, RALT(KC_E), KC_COMM, KC_9, KC_SLSH, RALT(KC_3), KC_NO, RALT(KC_2), KC_NO, KC_TRNS, KC_NO, KC_NO, KC_LBRC, KC_DOT, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, RSFT(KC_M), KC_UNDS, KC_NO, KC_NO, KC_TRNS, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO),
 	[2] = LAYOUT(KC_TRNS, KC_NUBS, LSFT(KC_NUBS), RALT(KC_5), RALT(KC_MINS), KC_NO, RSFT(KC_QUOT), LSFT(KC_7), LSFT(KC_8), LSFT(KC_9), RALT(KC_3), KC_EQL, KC_TRNS, RALT(KC_6), KC_5, KC_1, KC_MINS, RALT(KC_7), KC_PSLS, LSFT(KC_4), LSFT(KC_5), LSFT(KC_6), KC_6, KC_PAST, KC_TRNS, KC_DOT, RGUI(KC_8), RALT(KC_4), RALT(KC_EQL), KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_M, LSFT(KC_1), LSFT(KC_2), LSFT(KC_3), LSFT(KC_EQL), KC_TRNS, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PDOT, LSFT(KC_0), KC_NO),
 	[3] = LAYOUT(KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_INS, KC_HOME, KC_UP, KC_END, KC_NO, KC_NO, KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGUP, KC_NO, KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, RCTL(KC_LEFT), KC_NO, RCTL(KC_RGHT), KC_PGDN, KC_TRNS, KC_NO, KC_TRNS, KC_NO, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO),
@@ -74,28 +74,28 @@ bool oled_task_user(void) {
         // oled_write_P(PSTR("couche: "), false);
         switch (get_highest_layer(layer_state|default_layer_state)) {
             case _BÉPO:
-                oled_write_P(PSTR("bepo\n"), false);
+                oled_write_P(PSTR("       bepo\n"), false);
                 break;
             case _ACCENTS:
-                oled_write_P(PSTR("accents\n"), false);
+                oled_write_P(PSTR("      accents\n"), false);
                 break;
             case _SYMBOLES:
                 oled_write_P(PSTR("chiffres & symboles\n"), false);
                 break;
             case _FLÈCHES:
-                oled_write_P(PSTR("fleches\n"), false);
+                oled_write_P(PSTR("      fleches\n"), false);
                 break;
             case _SOURIS:
-                oled_write_P(PSTR("souris\n"), false);
+                oled_write_P(PSTR("      souris\n"), false);
                 break;
             case _FONCTIONS:
-                oled_write_P(PSTR("fonctions\n"), false);
+                oled_write_P(PSTR("     fonctions\n"), false);
                 break;
             case _ADJUST:
-                oled_write_P(PSTR("adjust\n"), false);
+                oled_write_P(PSTR("      adjust\n"), false);
                 break;
             default:
-                oled_write_P(PSTR("???\n"), false);
+                oled_write_P(PSTR("        ???\n"), false);
         }
 
         // Write host Keyboard LED Status to OLEDs
