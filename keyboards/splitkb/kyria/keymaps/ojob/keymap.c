@@ -47,13 +47,13 @@ enum layers {
 };
 
 // Aliases for readability
-#define VERSION  "2023-07-30.11"
+#define VERSION  "2023-07-31.01"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_BÉPO] = LAYOUT(
         KC_ESC, KC_B, KC_2, KC_P, KC_O, KC_7, KC_Z, KC_V, KC_D, KC_L, KC_J, KC_W,
         LT(_FONCTIONS,KC_TAB), KC_Q, KC_U, KC_I, KC_E, KC_M, KC_C, KC_T, KC_S, KC_R, KC_N, KC_SCLN,
-        LCTL_T(KC_DEL), KC_0, KC_Y, KC_X, KC_LT, KC_K, KC_NO, KC_NO, KC_NO, MO(_ADJUST), KC_4, KC_A, KC_G, KC_H, KC_F, RCTL_T(KC_ENT),
+        LCTL_T(KC_DEL), KC_0, KC_Y, KC_X, KC_LT, KC_K, KC_NO, KC_NO, MO(_ADJUST), KC_4, KC_4, KC_A, KC_G, KC_H, KC_F, RCTL_T(KC_ENT),
         KC_LSFT, KC_LGUI, LALT_T(KC_8), LT(_FLÈCHES,KC_SPC), LT(_SOURIS,KC_DEL), LT(_SYMBOLES,KC_BSPC), LT(_ACCENTS,KC_SPC), RSFT_T(KC_ENT), KC_6, KC_NO),
 	[_ACCENTS] = LAYOUT(
         KC_TRNS, KC_3, KC_NO, KC_QUES, KC_NO, KC_NO, KC_NO, KC_NO, KC_RBRC, KC_NO, KC_NO, KC_NO,
@@ -101,8 +101,7 @@ bool oled_task_user(void) {
         oled_write_P(qmk_logo, false);
 
         // meta informations
-        oled_write_P(PSTR("       "), false);
-        // VERSION shall be on 13 characters
+        oled_write_P(PSTR("      "), false); // padding
         oled_write_P(PSTR(VERSION), false);
         oled_write_P(PSTR("\n"), false);
         oled_write_P(PSTR("\n"), false);
