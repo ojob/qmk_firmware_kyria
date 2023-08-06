@@ -50,10 +50,14 @@ enum custom_keycodes {
     OLED_BRI_MAX = SAFE_RANGE, // OLED screen brightness max
     OLED_BRI_MID,              // OLED screen brightness middle
     OLED_BRI_DIM,              // OLED screen brightness dimmed
+    A_GRAVE_CAPITAL,
+    E_ACUTE_CAPITAL,
+    AE_LIGATURE,
+    OE_LIGATURE,
 };
 
 // Aliases for readability
-#define VERSION  "2023-08-06.0"
+#define VERSION  "2023-08-06.2"
 #define OLED_BRIGHTNESS_MAX 255
 #define OLED_BRIGHTNESS_MIDDLE 50
 #define OLED_BRIGHTNESS_DIMMED 1
@@ -65,9 +69,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         LCTL_T(KC_DEL), KC_0, KC_Y, KC_X, KC_LT, KC_K, KC_NO, MO(_ADJUST), MO(_ADJUST), KC_4, KC_4, KC_A, KC_G, KC_H, KC_F, RCTL_T(KC_ENT),
         KC_LSFT, KC_LGUI, LALT_T(KC_8), LT(_ACCENTS,KC_SPC), LT(_FLÈCHES,KC_DEL), LT(_FLÈCHES,KC_BSPC), LT(_SYMBOLES,KC_SPC), RSFT_T(KC_6), KC_NO, KC_NO),
 	[_ACCENTS] = LAYOUT(
-        KC_TRNS, KC_3, KC_NO, KC_QUES, KC_NO, KC_NO, KC_NO, KC_NO, KC_RBRC, KC_NO, KC_NO, KC_NO,
+        KC_TRNS, KC_3, E_ACUTE_CAPITAL, KC_QUES, OE_LIGATURE, KC_NO, KC_NO, KC_NO, KC_RBRC, KC_NO, KC_NO, KC_NO,
         KC_TRNS, RALT(KC_0), KC_QUOT, KC_LCBR, RALT(KC_E), KC_COMM, KC_9, KC_SLSH, RALT(KC_3), KC_NO, RALT(KC_2), KC_NO,
-        KC_TRNS, KC_NO, KC_NO, KC_LBRC, KC_DOT, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, RSFT(KC_M), KC_UNDS, KC_NO, KC_NO,KC_TRNS, KC_NO,
+        KC_TRNS, A_GRAVE_CAPITAL, AE_LIGATURE, KC_LBRC, KC_DOT, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, RSFT(KC_M), KC_UNDS, KC_NO, KC_NO,KC_TRNS, KC_NO,
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO),
 	[_SYMBOLES] = LAYOUT(
         KC_TRNS, KC_NUBS, LSFT(KC_NUBS), RALT(KC_5), RALT(KC_MINS), KC_NO, RSFT(KC_QUOT), LSFT(KC_7), LSFT(KC_8), LSFT(KC_9), RALT(KC_3), KC_EQL,
@@ -105,30 +109,38 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     /* custom treatment
     <https://docs.qmk.fm/#/custom_quantum_functions>
     */
-    switch (keycode) {
-        case OLED_BRI_MAX:
-            if (record->event.pressed) {
+    if (record->event.pressed) {
+        switch (keycode) {
+            case A_GRAVE_CAPITAL:
+                send_unicode_string("À");
+                return false;
+            case E_ACUTE_CAPITAL:
+                send_unicode_string("É");
+                return false;
+            case AE_LIGATURE:
+                send_unicode_string("æ");
+                return false;
+            case OE_LIGATURE:
+                send_unicode_string("œ");
+                return false;
+            case OLED_BRI_MAX:
                 oled_set_brightness(OLED_BRIGHTNESS_MAX);
-            }
-            return false; // skip further processing
-        case OLED_BRI_MID:
-            if (record->event.pressed) {
+                send_unicode_string("É");
+                return false; // skip further processing
+            case OLED_BRI_MID:
                 oled_set_brightness(OLED_BRIGHTNESS_MIDDLE);
-            }
-            return false; // skip further processing
-        case OLED_BRI_DIM:
-            if (record->event.pressed) {
+                return false; // skip further processing
+            case OLED_BRI_DIM:
                 oled_set_brightness(OLED_BRIGHTNESS_DIMMED);
-            }
-            return false; // skip further processing
-        default:
-            return true; // process all other keycodes normally
+                return false; // skip further processing
+            default:
+                return true; // process all other keycodes normally
+        };
     }
+    return true;
 }
 
 bool oled_task_user(void) {
-
-
     if (is_keyboard_master()) {
         oled_write_P(qmk_logo, false);
 
