@@ -46,14 +46,23 @@ enum layers {
     _ADJUST,
 };
 
+enum custom_keycodes {
+    OLED_BRI_MAX = SAFE_RANGE, // OLED screen brightness max
+    OLED_BRI_MID,              // OLED screen brightness middle
+    OLED_BRI_DIM,              // OLED screen brightness dimmed
+};
+
 // Aliases for readability
-#define VERSION  "2023-07-31.05"
+#define VERSION  "2023-08-06.0"
+#define OLED_BRIGHTNESS_MAX 255
+#define OLED_BRIGHTNESS_MIDDLE 50
+#define OLED_BRIGHTNESS_DIMMED 1
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_BÉPO] = LAYOUT(
         LT(_FONCTIONS,KC_ESC), KC_B, KC_2, KC_P, KC_O, KC_7, KC_Z, KC_V, KC_D, KC_L, KC_J, KC_W,
         LT(_SOURIS,KC_TAB), KC_Q, KC_U, KC_I, KC_E, KC_M, KC_C, KC_T, KC_S, KC_R, KC_N, KC_SCLN,
-        LCTL_T(KC_DEL), KC_0, KC_Y, KC_X, KC_LT, KC_K, KC_NO, KC_NO, MO(_ADJUST), KC_4, KC_4, KC_A, KC_G, KC_H, KC_F, RCTL_T(KC_ENT),
+        LCTL_T(KC_DEL), KC_0, KC_Y, KC_X, KC_LT, KC_K, KC_NO, MO(_ADJUST), MO(_ADJUST), KC_4, KC_4, KC_A, KC_G, KC_H, KC_F, RCTL_T(KC_ENT),
         KC_LSFT, KC_LGUI, LALT_T(KC_8), LT(_ACCENTS,KC_SPC), LT(_FLÈCHES,KC_DEL), LT(_FLÈCHES,KC_BSPC), LT(_SYMBOLES,KC_SPC), RSFT_T(KC_6), KC_NO, KC_NO),
 	[_ACCENTS] = LAYOUT(
         KC_TRNS, KC_3, KC_NO, KC_QUES, KC_NO, KC_NO, KC_NO, KC_NO, KC_RBRC, KC_NO, KC_NO, KC_NO,
@@ -85,17 +94,40 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                         KC_TRNS, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO
     ),
 	[_ADJUST] = LAYOUT(
-        RGB_HUI, RGB_SAI, RGB_SPI, RGB_MOD, RGB_VAI, KC_NO, KC_BRIU, KC_VOLU, KC_MNXT, KC_NO, KC_NO, KC_NO,
-        RGB_HUD, RGB_SAD, RGB_SPD, RGB_RMOD, RGB_VAD, KC_NO, KC_BRID, KC_VOLD, KC_MPLY, KC_NO, KC_NO, KC_NO,
-        KC_NO, KC_NO, KC_NO, KC_NO, RGB_TOG, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_MUTE, KC_MSTP, KC_NO, KC_NO, KC_NO,
+        RGB_HUI, RGB_SAI, RGB_SPI, RGB_MOD, RGB_VAI, OLED_BRI_MAX, KC_BRIU, KC_VOLU, KC_MNXT, KC_NO, KC_NO, KC_NO,
+        RGB_HUD, RGB_SAD, RGB_SPD, RGB_RMOD, RGB_VAD, OLED_BRI_MID, KC_BRID, KC_VOLD, KC_MPLY, KC_NO, KC_NO, KC_NO,
+        KC_NO, KC_NO, KC_NO, KC_NO, RGB_TOG, OLED_BRI_DIM, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_MUTE, KC_MSTP, KC_NO, KC_NO, KC_NO,
         KC_NO, KC_NO, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO
     )
 };
 
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    /* custom treatment
+    <https://docs.qmk.fm/#/custom_quantum_functions>
+    */
+    switch (keycode) {
+        case OLED_BRI_MAX:
+            if (record->event.pressed) {
+                oled_set_brightness(OLED_BRIGHTNESS_MAX);
+            }
+            return false; // skip further processing
+        case OLED_BRI_MID:
+            if (record->event.pressed) {
+                oled_set_brightness(OLED_BRIGHTNESS_MIDDLE);
+            }
+            return false; // skip further processing
+        case OLED_BRI_DIM:
+            if (record->event.pressed) {
+                oled_set_brightness(OLED_BRIGHTNESS_DIMMED);
+            }
+            return false; // skip further processing
+        default:
+            return true; // process all other keycodes normally
+    }
+}
+
 bool oled_task_user(void) {
 
-    // Sets the brightness level of the display
-    // oled_set_brightness(10);
 
     if (is_keyboard_master()) {
         oled_write_P(qmk_logo, false);
