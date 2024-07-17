@@ -47,100 +47,96 @@ enum layers {
     _ADJUST,
 };
 
-enum custom_keycodes {
-    OLED_BRI = SAFE_RANGE, // OLED screen brightness increase
-    OLED_BRD,              // OLED screen brightness decrease
-    OLED_TOG,              // OLED screen display toggle
-    A_GRAVE_CAPITAL,
+enum custom_keycodes { // processed by function `process_record_user`, see below
+    // French letters
+    A_GRAVE_CAPITAL = SAFE_RANGE,
     E_ACUTE_CAPITAL,
     AE_LIGATURE,
     OE_LIGATURE,
+    // brightness controls
+    OLED_BRI, // OLED screen brightness increase
+    OLED_BRD,             // OLED screen brightness decrease
+    OLED_TOG,  // OLED screen display toggle
 };
 
 // Aliases for readability
-#define VERSION  "2023-10-09.4"
+#define VERSION  "2024-07-17.0"
+
+// tap-holds & navigation
+#define ESC_FUN LT(_FONCTIONS,KC_ESC)
+#define TAB_MSE LT(_SOURIS,KC_TAB)
+#define ENT_CTL RCTL_T(KC_ENT)
+#define DEL_ARR LT(_FLÈCHES,KC_DEL)
+#define BSPC_ARR LT(_FLÈCHES,KC_BSPC)
+#define SPC_ACC LT(_ACCENTS,KC_SPC)
+#define SPC_SYM LT(_SYMBOLES,KC_SPC)
+
+// French keys
+#define F_DASH RSFT_T(KC_6)
+#define F_UNDERSC LALT_T(KC_8)
+#define F_LT KC_NUBS
+#define F_GT LSFT(KC_NUBS)
+#define F_EURO RALT(KC_E)
+#define F_AT RALT(KC_0)
+#define F_PIPE RALT(KC_6)
+#define F_LBRK RALT(KC_5)
+#define F_RBRK RALT(KC_MINS)
+#define F_COLON KC_DOT
+#define F_BSLSH RALT(KC_8)
+#define F_LCURL RALT(KC_4)
+#define F_RCURL RALT(KC_EQL)
+#define F_BTICK RALT(KC_7)
+#define F_PCT RSFT(KC_QUOT)
+#define F_TILD RSFT(KC_M)
+#define F_HASH RALT(KC_3)
+#define F_QUEST RSFT(KC_M)
+#define F_DOLLAR KC_RBRC
+
+// brightness values
 #define OLED_BRI_MAX 255
 #define OLED_BRI_MIN 0
 #define OLED_BRI_STEP 64
 
-// Signal, type and handler for custom data sync between sides
-// see https://github.com/qmk/qmk_firmware/blob/master/docs/feature_split_keyboard.md#custom-data-sync-between-sides-idcustom-data-sync
-#define SPLIT_TRANSACTION_IDS_KB KEYBOARD_SYNC_A
-
-typedef struct _m2s_t {
-    uint8_t target_brightness;
-} m2s_t;
-
-void kb_sync_oled_bri_slave_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, const void* out_data) {
-    const m2s_t *m2s = (const m2s_t*)in_data;
-    oled_set_brightness(m2s->target_brightness);
-}
-void keyboard_post_init_user(void) {
-    transaction_register_rpc(KEYBOARD_SYNC_A, kb_sync_oled_bri_slave_handler);
-}
-
-// Keyboard map
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_BÉPO] = LAYOUT(
-        LT(_FONCTIONS,KC_ESC), KC_B, KC_2, KC_P, KC_O, KC_7, KC_Z, KC_V, KC_D, KC_L, KC_J, KC_W,
-        LT(_SOURIS,KC_TAB), KC_Q, KC_U, KC_I, KC_E, KC_M, KC_C, KC_T, KC_S, KC_R, KC_N, KC_SCLN,
-        LCTL_T(KC_DEL), KC_0, KC_Y, KC_X, KC_LT, KC_K, KC_NO, MO(_ADJUST), MO(_ADJUST), KC_4, KC_4, KC_A, KC_G, KC_H, KC_F, RCTL_T(KC_ENT),
-        KC_LSFT, KC_LGUI, LALT_T(KC_8), LT(_ACCENTS,KC_SPC), LT(_FLÈCHES,KC_DEL), LT(_FLÈCHES,KC_BSPC), LT(_SYMBOLES,KC_SPC), RSFT_T(KC_6), KC_NO, KC_NO),
+        ESC_FUN, KC_B, KC_2, KC_P, KC_O, KC_7, KC_Z, KC_V, KC_D, KC_L, KC_J, KC_W,
+        TAB_MSE, KC_Q, KC_U, KC_I, KC_E, KC_M, KC_C, KC_T, KC_S, KC_R, KC_N, KC_SCLN,
+        KC_LCTL, KC_0, KC_Y, KC_X, KC_LT, KC_K, KC_NO, MO(_ADJUST), MO(_ADJUST), KC_4, KC_4, KC_A, KC_G, KC_H, KC_F, ENT_CTL,
+        KC_LSFT, KC_LGUI, F_UNDERSC, SPC_ACC, DEL_ARR, BSPC_ARR, SPC_SYM, F_DASH, KC_NO, KC_NO),
 	[_ACCENTS] = LAYOUT(
-        KC_TRNS, KC_3, E_ACUTE_CAPITAL, KC_QUES, OE_LIGATURE, KC_NO, KC_NO, KC_NO, KC_RBRC, KC_NO, KC_NO, KC_NO,
-        KC_TRNS, RALT(KC_0), KC_QUOT, KC_LCBR, RALT(KC_E), KC_COMM, KC_9, KC_SLSH, RALT(KC_3), KC_NO, RALT(KC_2), KC_NO,
-        KC_TRNS, A_GRAVE_CAPITAL, AE_LIGATURE, KC_LBRC, KC_DOT, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, RSFT(KC_M), KC_UNDS, KC_NO, KC_NO,KC_TRNS, KC_NO,
+        KC_TRNS, KC_3, E_ACUTE_CAPITAL, KC_QUES, OE_LIGATURE, KC_NO, KC_NO, KC_NO, F_DOLLAR, KC_NO, KC_NO, KC_NO,
+        KC_TRNS, F_AT, KC_QUOT, KC_LCBR, F_EURO, KC_COMM, KC_9, KC_SLSH, KC_NO, KC_NO, F_TILD, KC_NO,
+        KC_TRNS, A_GRAVE_CAPITAL, AE_LIGATURE, KC_LBRC, KC_DOT, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, F_QUEST, KC_UNDS, F_HASH, KC_NO, KC_TRNS, KC_NO,
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO),
 	[_SYMBOLES] = LAYOUT(
-        KC_TRNS, KC_NUBS, LSFT(KC_NUBS), RALT(KC_5), RALT(KC_MINS), KC_NO, RSFT(KC_QUOT), LSFT(KC_7), LSFT(KC_8), LSFT(KC_9), RALT(KC_3), KC_EQL,
-        KC_TRNS, RALT(KC_6), KC_5, KC_1, KC_MINS, RALT(KC_7), KC_PSLS, LSFT(KC_4), LSFT(KC_5), LSFT(KC_6), KC_6, KC_PAST,
-        KC_TRNS, KC_DOT, RALT(KC_8), RALT(KC_4), RALT(KC_EQL), KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_M, LSFT(KC_1), LSFT(KC_2), LSFT(KC_3), LSFT(KC_EQL),
-        KC_TRNS, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PDOT, LSFT(KC_0), KC_NO
-    ),
+        KC_TRNS, F_LT, F_GT, F_LBRK, F_RBRK, KC_NO, F_PCT, LSFT(KC_7), LSFT(KC_8), LSFT(KC_9), F_HASH, KC_EQL,
+        KC_TRNS, F_PIPE, KC_5, KC_1, KC_MINS, F_BTICK, KC_PSLS, LSFT(KC_4), LSFT(KC_5), LSFT(KC_6), KC_6, KC_PAST,
+        KC_TRNS, F_COLON, F_BSLSH, F_LCURL, F_RCURL, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_M, LSFT(KC_1), LSFT(KC_2), LSFT(KC_3), LSFT(KC_EQL),
+        KC_TRNS, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PDOT, LSFT(KC_0), KC_NO),
 	[_FLÈCHES] = LAYOUT(
         KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_INS, KC_HOME, KC_UP, KC_END, KC_NO, KC_NO,
         KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, LGUI(KC_UP), KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGUP, KC_NO,
         KC_TRNS, LGUI(KC_LEFT), LGUI(KC_RGHT), LGUI(KC_DOWN), KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, RCTL(KC_LEFT), KC_NO, RCTL(KC_RGHT), KC_PGDN, KC_TRNS,
-        KC_NO, KC_TRNS, KC_NO, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO
-    ),
+        KC_NO, KC_TRNS, KC_NO, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO),
 	[_SOURIS] = LAYOUT(
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_ACL2, KC_BTN2, KC_MS_U, KC_BTN3, KC_NO, KC_NO,
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_ACL1, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_U, KC_NO,
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_ACL0, KC_WH_L, KC_NO, KC_WH_R, KC_WH_D, KC_NO,
-        KC_NO, KC_NO, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BTN1, KC_NO, KC_NO
-    ),
+        KC_NO, KC_NO, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BTN1, KC_NO, KC_NO),
 	[_FONCTIONS] = LAYOUT(
         KC_TRNS, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12,
         KC_TRNS, KC_F1, KC_NO, KC_NO, LCTL(KC_F5), LCTL(KC_F6), KC_NO, KC_NO, KC_NO, KC_NO, LALT(KC_F11), KC_NO,
         KC_TRNS, KC_NO, KC_CUT, KC_COPY, KC_PSTE, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-                        KC_TRNS, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO
-    ),
+        KC_TRNS, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO),
 	[_ADJUST] = LAYOUT(
         RGB_HUI, RGB_SAI, RGB_SPI, RGB_MOD, RGB_VAI, OLED_BRI, KC_BRIU, KC_VOLU, KC_MNXT, KC_NO, KC_NO, QK_UNICODE_MODE_NEXT,
         RGB_HUD, RGB_SAD, RGB_SPD, RGB_RMOD, RGB_VAD, OLED_BRD, KC_BRID, KC_VOLD, KC_MPLY, KC_NO, KC_NO, KC_NO,
         KC_NO, KC_NO, KC_NO, KC_NO, RGB_TOG, OLED_TOG, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_MUTE, KC_MSTP, KC_NO, KC_NO, KC_NO,
-        KC_NO, KC_NO, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO
-    )
+        KC_NO, KC_NO, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO)
 };
 
 void set_both_oled_brightness(uint8_t target) {
     oled_set_brightness(target);
-    if (!is_keyboard_master()) return;
-
-    // Interact with slave every 500ms
-    static uint32_t last_sync = 0;
-    if (timer_elapsed32(last_sync) > 500) {
-        m2s_t m2s = {target};
-        bool sync_ok = transaction_rpc_send(
-            KEYBOARD_SYNC_A, sizeof(m2s), &m2s
-        );
-        if(sync_ok) {
-            last_sync = timer_read32();
-            dprintf("Slave value: %d\n", s2m.s2m_data);
-        } else {
-            dprint("Slave sync failed!\n");
-        }
-    }
 }
 
 void increase_oled_brightness(void) {
