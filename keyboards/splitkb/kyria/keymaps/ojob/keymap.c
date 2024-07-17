@@ -13,6 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include "transactions.h"
 #include QMK_KEYBOARD_H
 
 // clang-format off
@@ -47,9 +48,9 @@ enum layers {
 };
 
 enum custom_keycodes {
-    OLED_BRI_MAX = SAFE_RANGE, // OLED screen brightness max
-    OLED_BRI_MID,              // OLED screen brightness middle
-    OLED_BRI_DIM,              // OLED screen brightness dimmed
+    OLED_BRI = SAFE_RANGE, // OLED screen brightness increase
+    OLED_BRD,              // OLED screen brightness decrease
+    OLED_TOG,              // OLED screen display toggle
     A_GRAVE_CAPITAL,
     E_ACUTE_CAPITAL,
     AE_LIGATURE,
@@ -57,11 +58,28 @@ enum custom_keycodes {
 };
 
 // Aliases for readability
-#define VERSION  "2023-08-06.2"
-#define OLED_BRIGHTNESS_MAX 255
-#define OLED_BRIGHTNESS_MIDDLE 50
-#define OLED_BRIGHTNESS_DIMMED 1
+#define VERSION  "2023-10-09.4"
+#define OLED_BRI_MAX 255
+#define OLED_BRI_MIN 0
+#define OLED_BRI_STEP 64
 
+// Signal, type and handler for custom data sync between sides
+// see https://github.com/qmk/qmk_firmware/blob/master/docs/feature_split_keyboard.md#custom-data-sync-between-sides-idcustom-data-sync
+#define SPLIT_TRANSACTION_IDS_KB KEYBOARD_SYNC_A
+
+typedef struct _m2s_t {
+    uint8_t target_brightness;
+} m2s_t;
+
+void kb_sync_oled_bri_slave_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, const void* out_data) {
+    const m2s_t *m2s = (const m2s_t*)in_data;
+    oled_set_brightness(m2s->target_brightness);
+}
+void keyboard_post_init_user(void) {
+    transaction_register_rpc(KEYBOARD_SYNC_A, kb_sync_oled_bri_slave_handler);
+}
+
+// Keyboard map
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_BÉPO] = LAYOUT(
         LT(_FONCTIONS,KC_ESC), KC_B, KC_2, KC_P, KC_O, KC_7, KC_Z, KC_V, KC_D, KC_L, KC_J, KC_W,
@@ -98,12 +116,58 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                         KC_TRNS, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO
     ),
 	[_ADJUST] = LAYOUT(
-        RGB_HUI, RGB_SAI, RGB_SPI, RGB_MOD, RGB_VAI, OLED_BRI_MAX, KC_BRIU, KC_VOLU, KC_MNXT, KC_NO, KC_NO, QK_UNICODE_MODE_NEXT,
-        RGB_HUD, RGB_SAD, RGB_SPD, RGB_RMOD, RGB_VAD, OLED_BRI_MID, KC_BRID, KC_VOLD, KC_MPLY, KC_NO, KC_NO, KC_NO,
-        KC_NO, KC_NO, KC_NO, KC_NO, RGB_TOG, OLED_BRI_DIM, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_MUTE, KC_MSTP, KC_NO, KC_NO, KC_NO,
+        RGB_HUI, RGB_SAI, RGB_SPI, RGB_MOD, RGB_VAI, OLED_BRI, KC_BRIU, KC_VOLU, KC_MNXT, KC_NO, KC_NO, QK_UNICODE_MODE_NEXT,
+        RGB_HUD, RGB_SAD, RGB_SPD, RGB_RMOD, RGB_VAD, OLED_BRD, KC_BRID, KC_VOLD, KC_MPLY, KC_NO, KC_NO, KC_NO,
+        KC_NO, KC_NO, KC_NO, KC_NO, RGB_TOG, OLED_TOG, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_MUTE, KC_MSTP, KC_NO, KC_NO, KC_NO,
         KC_NO, KC_NO, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO
     )
 };
+
+void set_both_oled_brightness(uint8_t target) {
+    oled_set_brightness(target);
+    if (!is_keyboard_master()) return;
+
+    // Interact with slave every 500ms
+    static uint32_t last_sync = 0;
+    if (timer_elapsed32(last_sync) > 500) {
+        m2s_t m2s = {target};
+        bool sync_ok = transaction_rpc_send(
+            KEYBOARD_SYNC_A, sizeof(m2s), &m2s
+        );
+        if(sync_ok) {
+            last_sync = timer_read32();
+            dprintf("Slave value: %d\n", s2m.s2m_data);
+        } else {
+            dprint("Slave sync failed!\n");
+        }
+    }
+}
+
+void increase_oled_brightness(void) {
+    uint8_t current = oled_get_brightness();
+    // Take care not to overflow uint8
+    uint8_t target = (
+        (OLED_BRI_MAX - OLED_BRI_STEP < current) ?
+        (OLED_BRI_MAX) : (current + OLED_BRI_STEP)
+    );
+    set_both_oled_brightness(target);
+}
+
+void decrease_oled_brightness(void) {
+    uint8_t current = oled_get_brightness();
+    // Take care not to underflow uint8
+    uint8_t target = (
+        (OLED_BRI_MIN + OLED_BRI_STEP > current) ?
+        (OLED_BRI_MIN) : (current - OLED_BRI_STEP)
+    );
+    oled_set_brightness(target);
+}
+
+void toggle_oled_display(void) {
+    uint8_t current = oled_get_brightness();
+    uint8_t target = ((current > 0) ? 0 : OLED_BRI_STEP);
+    oled_set_brightness(target);
+}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     /* custom treatment
@@ -123,16 +187,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             case OE_LIGATURE:
                 send_unicode_string("œ");
                 return false;
-            case OLED_BRI_MAX:
-                oled_set_brightness(OLED_BRIGHTNESS_MAX);
-                send_unicode_string("É");
+            case OLED_BRI:
+                increase_oled_brightness();
                 return false; // skip further processing
-            case OLED_BRI_MID:
-                oled_set_brightness(OLED_BRIGHTNESS_MIDDLE);
+            case OLED_BRD:
+                decrease_oled_brightness();
                 return false; // skip further processing
-            case OLED_BRI_DIM:
-                oled_set_brightness(OLED_BRIGHTNESS_DIMMED);
-                return false; // skip further processing
+            case OLED_TOG:
+                toggle_oled_display();
+                return false;
             default:
                 return true; // process all other keycodes normally
         };
