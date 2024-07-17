@@ -60,10 +60,45 @@ enum custom_keycodes { // processed by function `process_record_user`, see below
 };
 
 // Aliases for readability
-#define VERSION  "2024-07-17.1"
+#define VERSION  "2024-07-17.2"
+
+// French keys
+#define F_A KC_Q
+#define F_EACUTE KC_2
+#define F_EGRAVE KC_7
+#define F_Q KC_A
+#define F_Z KC_W
+#define F_W KC_Z
+#define F_M KC_SCLN
+#define F_AGRAVE KC_0
+#define F_CCED KC_9
+#define F_QUOT KC_4
+#define F_DASH KC_6
+#define F_UNDERSC KC_8
+#define F_LT KC_NUBS
+#define F_GT LSFT(KC_NUBS)
+#define F_EURO RALT(KC_E)
+#define F_AT RALT(KC_0)
+#define F_PIPE RALT(KC_6)
+#define F_LBRK RALT(KC_5)
+#define F_RBRK RALT(KC_MINS)
+#define F_COLON KC_DOT
+#define F_SEMICOL KC_COMM
+#define F_BSLSH RALT(KC_8)
+#define F_LPAR KC_5
+#define F_RPAR KC_MINS
+#define F_LCURL RALT(KC_4)
+#define F_RCURL RALT(KC_EQL)
+#define F_BTICK RALT(KC_7)
+#define F_PCT RSFT(KC_QUOT)
+#define F_TILD RSFT(KC_M)
+#define F_HASH RALT(KC_3)
+#define F_QUEST RSFT(KC_M)
+#define F_DOLLAR KC_RBRC
+#define F_AMP LSFT(KC_1)
 
 // home-row mods
-#define A_GUI LGUI_T(KC_Q)
+#define A_GUI LGUI_T(F_A)
 #define U_ALT LALT_T(KC_U)
 #define I_SFT LSFT_T(KC_I)
 #define E_CTL LCTL_T(KC_E)
@@ -73,34 +108,14 @@ enum custom_keycodes { // processed by function `process_record_user`, see below
 #define N_GUI RGUI_T(KC_N)
 
 // tap-holds & navigation
-#define ESC_FUN LT(_FONCTIONS,KC_ESC)
-#define TAB_MSE LT(_SOURIS,KC_TAB)
-#define ENT_CTL RCTL_T(KC_ENT)
-#define DEL_ARR LT(_FLÈCHES,KC_DEL)
-#define BSPC_ARR LT(_FLÈCHES,KC_BSPC)
-#define SPC_ACC LT(_ACCENTS,KC_SPC)
-#define SPC_SYM LT(_SYMBOLES,KC_SPC)
-
-// French keys
-#define F_DASH RSFT_T(KC_6)
-#define F_UNDERSC LALT_T(KC_8)
-#define F_LT KC_NUBS
-#define F_GT LSFT(KC_NUBS)
-#define F_EURO RALT(KC_E)
-#define F_AT RALT(KC_0)
-#define F_PIPE RALT(KC_6)
-#define F_LBRK RALT(KC_5)
-#define F_RBRK RALT(KC_MINS)
-#define F_COLON KC_DOT
-#define F_BSLSH RALT(KC_8)
-#define F_LCURL RALT(KC_4)
-#define F_RCURL RALT(KC_EQL)
-#define F_BTICK RALT(KC_7)
-#define F_PCT RSFT(KC_QUOT)
-#define F_TILD RSFT(KC_M)
-#define F_HASH RALT(KC_3)
-#define F_QUEST RSFT(KC_M)
-#define F_DOLLAR KC_RBRC
+#define ESC_FUN LT(_FONCTIONS, KC_ESC)
+#define TAB_MSE LT(_SOURIS, KC_TAB)
+#define DEL_ARR LT(_FLÈCHES, KC_DEL)
+#define BSPC_ARR LT(_FLÈCHES, KC_BSPC)
+#define SPC_ACC LT(_ACCENTS, KC_SPC)
+#define SPC_SYM LT(_SYMBOLES, KC_SPC)
+#define DASH_ADJ LT(_ADJUST, F_DASH)
+#define UNDER_ADJ LT(_ADJUST, F_UNDERSC)
 
 // brightness values
 #define OLED_BRI_MAX 255
@@ -109,20 +124,20 @@ enum custom_keycodes { // processed by function `process_record_user`, see below
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_BÉPO] = LAYOUT(
-        ESC_FUN, KC_B, KC_2, KC_P, KC_O, KC_7, KC_Z, KC_V, KC_D, KC_L, KC_J, KC_W,
-        TAB_MSE, A_GUI, U_ALT, I_SFT, E_CTL, KC_M, KC_C, T_CTL, S_SFT, R_ALT, N_GUI, KC_SCLN,
-        KC_LCTL, KC_0, KC_Y, KC_X, KC_LT, KC_K, KC_NO, MO(_ADJUST), MO(_ADJUST), KC_4, KC_4, KC_A, KC_G, KC_H, KC_F, ENT_CTL,
-        KC_LSFT, KC_LGUI, F_UNDERSC, SPC_ACC, DEL_ARR, BSPC_ARR, SPC_SYM, F_DASH, KC_NO, KC_NO),
+        ESC_FUN, KC_B, F_EACUTE, KC_P, KC_O, F_EGRAVE, F_W, KC_V, KC_D, KC_L, KC_J, F_Z,
+        TAB_MSE, A_GUI, U_ALT, I_SFT, E_CTL, KC_M, KC_C, T_CTL, S_SFT, R_ALT, N_GUI, F_M,
+        KC_NO, F_AGRAVE, KC_Y, KC_X, KC_LT, KC_K, KC_NO, KC_NO, KC_NO, KC_NO, F_QUOT, F_Q, KC_G, KC_H, KC_F, KC_ENT,
+        KC_NO, KC_NO, UNDER_ADJ, SPC_ACC, DEL_ARR, BSPC_ARR, SPC_SYM, DASH_ADJ, KC_NO, KC_NO),
 	[_ACCENTS] = LAYOUT(
         KC_TRNS, KC_3, E_ACUTE_CAPITAL, KC_QUES, OE_LIGATURE, KC_NO, KC_NO, KC_NO, F_DOLLAR, KC_NO, KC_NO, KC_NO,
-        KC_TRNS, F_AT, KC_QUOT, KC_LCBR, F_EURO, KC_COMM, KC_9, KC_SLSH, KC_NO, KC_NO, F_TILD, KC_NO,
-        KC_TRNS, A_GRAVE_CAPITAL, AE_LIGATURE, KC_LBRC, KC_DOT, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, F_QUEST, KC_UNDS, F_HASH, KC_NO, KC_TRNS, KC_NO,
+        KC_TRNS, F_AT, KC_QUOT, KC_LCBR, F_EURO, F_SEMICOL, F_CCED, KC_SLSH, KC_NO, KC_NO, F_TILD, KC_NO,
+        KC_TRNS, A_GRAVE_CAPITAL, AE_LIGATURE, KC_LBRC, KC_DOT, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, F_QUEST, KC_UNDS, F_HASH, KC_NO, KC_NO, KC_NO,
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO),
 	[_SYMBOLES] = LAYOUT(
         KC_TRNS, F_LT, F_GT, F_LBRK, F_RBRK, KC_NO, F_PCT, LSFT(KC_7), LSFT(KC_8), LSFT(KC_9), F_HASH, KC_EQL,
-        KC_TRNS, F_PIPE, KC_5, KC_1, KC_MINS, F_BTICK, KC_PSLS, LSFT(KC_4), LSFT(KC_5), LSFT(KC_6), KC_6, KC_PAST,
+        KC_TRNS, F_PIPE, F_LPAR, F_AMP, F_RPAR, F_BTICK, KC_PSLS, LSFT(KC_4), LSFT(KC_5), LSFT(KC_6), KC_6, KC_PAST,
         KC_TRNS, F_COLON, F_BSLSH, F_LCURL, F_RCURL, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_M, LSFT(KC_1), LSFT(KC_2), LSFT(KC_3), LSFT(KC_EQL),
-        KC_TRNS, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PDOT, LSFT(KC_0), KC_NO),
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LSFT(KC_0), KC_NO, KC_NO),
 	[_FLÈCHES] = LAYOUT(
         KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_INS, KC_HOME, KC_UP, KC_END, KC_NO, KC_NO,
         KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, LGUI(KC_UP), KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGUP, KC_NO,
