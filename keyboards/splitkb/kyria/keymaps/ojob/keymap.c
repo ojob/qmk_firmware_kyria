@@ -60,7 +60,17 @@ enum custom_keycodes { // processed by function `process_record_user`, see below
 };
 
 // Aliases for readability
-#define VERSION  "2024-07-17.0"
+#define VERSION  "2024-07-17.1"
+
+// home-row mods
+#define A_GUI LGUI_T(KC_Q)
+#define U_ALT LALT_T(KC_U)
+#define I_SFT LSFT_T(KC_I)
+#define E_CTL LCTL_T(KC_E)
+#define T_CTL RCTL_T(KC_T)
+#define S_SFT RSFT_T(KC_S)
+#define R_ALT LALT_T(KC_R)
+#define N_GUI RGUI_T(KC_N)
 
 // tap-holds & navigation
 #define ESC_FUN LT(_FONCTIONS,KC_ESC)
@@ -100,7 +110,7 @@ enum custom_keycodes { // processed by function `process_record_user`, see below
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_BÉPO] = LAYOUT(
         ESC_FUN, KC_B, KC_2, KC_P, KC_O, KC_7, KC_Z, KC_V, KC_D, KC_L, KC_J, KC_W,
-        TAB_MSE, KC_Q, KC_U, KC_I, KC_E, KC_M, KC_C, KC_T, KC_S, KC_R, KC_N, KC_SCLN,
+        TAB_MSE, A_GUI, U_ALT, I_SFT, E_CTL, KC_M, KC_C, T_CTL, S_SFT, R_ALT, N_GUI, KC_SCLN,
         KC_LCTL, KC_0, KC_Y, KC_X, KC_LT, KC_K, KC_NO, MO(_ADJUST), MO(_ADJUST), KC_4, KC_4, KC_A, KC_G, KC_H, KC_F, ENT_CTL,
         KC_LSFT, KC_LGUI, F_UNDERSC, SPC_ACC, DEL_ARR, BSPC_ARR, SPC_SYM, F_DASH, KC_NO, KC_NO),
 	[_ACCENTS] = LAYOUT(
