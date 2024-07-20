@@ -60,7 +60,7 @@ enum custom_keycodes { // processed by function `process_record_user`, see below
 };
 
 // Aliases for readability
-#define VERSION  "2024-07-17.2"
+#define VERSION  "2024-07-17.3"
 
 // French keys
 #define F_A KC_Q
@@ -91,7 +91,7 @@ enum custom_keycodes { // processed by function `process_record_user`, see below
 #define F_RCURL RALT(KC_EQL)
 #define F_BTICK RALT(KC_7)
 #define F_PCT RSFT(KC_QUOT)
-#define F_TILD RSFT(KC_M)
+#define F_TILD RALT(KC_2)
 #define F_HASH RALT(KC_3)
 #define F_QUEST RSFT(KC_M)
 #define F_DOLLAR KC_RBRC
