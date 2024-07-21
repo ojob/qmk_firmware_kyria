@@ -60,7 +60,7 @@ enum custom_keycodes { // processed by function `process_record_user`, see below
 };
 
 // Aliases for readability
-#define VERSION  "2024-07-21.1"
+#define VERSION  "2024-07-21.2"
 
 // French keys
 #define F_a KC_Q
@@ -73,6 +73,7 @@ enum custom_keycodes { // processed by function `process_record_user`, see below
 #define F_m KC_SCLN
 #define F_à KC_0
 #define F_ç KC_9
+#define F_DOT KC_LT
 #define F_VIRG KC_M
 #define F_QUOT KC_4
 #define F_DASH KC_6
@@ -87,7 +88,7 @@ enum custom_keycodes { // processed by function `process_record_user`, see below
 #define F_LBRK RALT(KC_5)
 #define F_RBRK RALT(KC_MINS)
 #define F_COLON KC_DOT
-#define F_SEMICOL KC_COMM
+#define F_MICOL KC_COMM
 #define F_SLSH KC_PSLS
 #define F_BSLSH RALT(KC_8)
 #define F_PARGR KC_QUES
@@ -101,8 +102,22 @@ enum custom_keycodes { // processed by function `process_record_user`, see below
 #define F_HASH RALT(KC_3)
 #define F_EXCL KC_SLSH
 #define F_QUEST RSFT(KC_M)
-#define F_DOLLAR KC_RBRC
+#define F_DOLL KC_RBRC
 #define F_AMP KC_1
+#define F_0 LSFT(KC_0)
+#define F_1 LSFT(KC_1)
+#define F_2 LSFT(KC_2)
+#define F_3 LSFT(KC_3)
+#define F_4 LSFT(KC_4)
+#define F_5 LSFT(KC_5)
+#define F_6 LSFT(KC_6)
+#define F_7 LSFT(KC_7)
+#define F_8 LSFT(KC_8)
+#define F_9 LSFT(KC_9)
+#define F_EQL LSFT(KC_EQL)
+
+#define WORDBEF RCTL(KC_LEFT)
+#define WORDAFT RCTL(KC_RGHT)
 
 // home-row mods
 #define a_GUI LGUI_T(F_a)
@@ -116,11 +131,11 @@ enum custom_keycodes { // processed by function `process_record_user`, see below
 
 // tap-holds & navigation
 #define DEL_ARR LT(_FUN_FLÈCHES, KC_DEL)
-#define BSPC_ARR LT(_FUN_FLÈCHES, KC_BSPC)
+#define BSP_ARR LT(_FUN_FLÈCHES, KC_BSPC)
 #define SPC_ACC LT(_ACCENTS, KC_SPC)
 #define SPC_SYM LT(_SYMBOLES, KC_SPC)
-#define DASH_ADJ LT(_ADJUST, F_DASH)
-#define UNDER_MSE LT(_FUN_SOURIS, F_UNDERSC)
+#define DSH_ADJ LT(_ADJUST, F_DASH)
+#define UND_MSE LT(_FUN_SOURIS, F_UNDERSC)
 
 // brightness values
 #define OLED_BRI_MAX 255
@@ -129,35 +144,35 @@ enum custom_keycodes { // processed by function `process_record_user`, see below
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_BÉPO] = LAYOUT(
-        KC_ESC, KC_B, F_é, KC_P, KC_O, F_è,                              F_w, KC_V, KC_D, KC_L, KC_J, F_z,
-        KC_NO, a_GUI, u_ALT, i_SFT, e_CTL, F_VIRG,                       KC_C, t_CTL, s_SFT, r_ALT, n_GUI, F_m,
-        KC_NO, F_à, KC_Y, KC_X, KC_LT, KC_K, KC_NO, KC_NO, KC_NO, KC_NO, F_QUOT, F_q, KC_G, KC_H, KC_F, KC_ENT,
-                    KC_NO, KC_NO, UNDER_MSE, SPC_ACC, DEL_ARR,    BSPC_ARR, SPC_SYM, DASH_ADJ, KC_NO, KC_NO),
+        KC_ESC , KC_B   , F_é    , KC_P   , KC_O   , F_è    ,                                     F_w    , KC_V   , KC_D   , KC_L   , KC_J   , F_z    ,
+        KC_NO  , a_GUI  , u_ALT  , i_SFT  , e_CTL  , F_VIRG ,                                     KC_C   , t_CTL  , s_SFT  , r_ALT  , n_GUI  , F_m    ,
+        KC_NO  , F_à    , KC_Y   , KC_X   , F_DOT  , KC_K   , KC_NO  , KC_NO  , KC_NO  , KC_NO  , F_QUOT , F_q    , KC_G   , KC_H   , KC_F   , KC_ENT ,
+                                   KC_NO  , KC_NO  , UND_MSE, SPC_ACC, DEL_ARR, BSP_ARR, SPC_SYM, DSH_ADJ, KC_NO  , KC_NO  ),
 	[_ACCENTS] = LAYOUT(
-        KC_TRNS, KC_3, M_É, F_PARGR, M_œ, KC_NO,                                  KC_NO, KC_NO, F_DOLLAR, KC_NO, KC_NO, KC_NO,
-        KC_TRNS, F_AT, F_ù, F_TREMA, F_€, F_SEMICOL,                              F_ç, F_EXCL, KC_NO, KC_NO, F_TILD, KC_NO,
-        KC_TRNS, M_À, M_æ, F_CIRCO, F_COLON, KC_TAB, KC_NO, KC_NO,  KC_NO, KC_NO, KC_NO, F_QUEST, KC_UNDS, F_HASH, KC_NO, KC_NO, KC_NO,
-                      KC_NO, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS,      KC_TRNS, KC_NO, KC_NO, KC_NO),
+        KC_TRNS, KC_3   , M_É    , F_PARGR, M_œ    , KC_NO  ,                                     KC_NO  , KC_NO  , F_DOLL , KC_NO  , KC_NO  , KC_NO  ,
+        KC_TRNS, F_AT   , F_ù    , F_TREMA, F_€    , F_MICOL,                                     F_ç    , F_EXCL , KC_NO  , KC_NO  , F_TILD , KC_NO  ,
+        KC_TRNS, M_À    , M_æ    , F_CIRCO, F_COLON, KC_TAB , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , F_QUEST, KC_UNDS, F_HASH , KC_NO  , KC_NO  ,
+                                   KC_NO  , KC_NO  , KC_NO  , KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO  , KC_NO  , KC_NO  ),
 	[_SYMBOLES] = LAYOUT(
-        KC_TRNS, F_LT, F_GT, F_LBRK, F_RBRK, KC_NO,                                      F_PCT, LSFT(KC_7), LSFT(KC_8), LSFT(KC_9), F_HASH, KC_EQL,
-        KC_TRNS, F_PIPE, F_LPAR, F_AMP, F_RPAR, F_BTICK,                                 F_SLSH, LSFT(KC_4), LSFT(KC_5), LSFT(KC_6), KC_6, KC_PAST,
-        KC_TRNS, F_COLON, F_BSLSH, F_LCURL, F_RCURL, KC_NO, KC_NO, KC_NO,  KC_NO, KC_NO, F_VIRG, LSFT(KC_1), LSFT(KC_2), LSFT(KC_3), LSFT(KC_EQL), KC_TRNS,
-                          KC_NO, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS,         KC_TRNS, KC_TRNS, LSFT(KC_0), KC_NO, KC_NO),
+        KC_TRNS, F_LT   , F_GT   , F_LBRK , F_RBRK , KC_NO  ,                                     F_PCT  , F_7    , F_8    , F_9    , F_HASH , KC_EQL ,
+        KC_TRNS, F_PIPE , F_LPAR , F_AMP  , F_RPAR , F_BTICK,                                     F_SLSH , F_4    , F_5    , F_6    , KC_6   , KC_PAST,
+        KC_TRNS, F_COLON, F_BSLSH, F_LCURL, F_RCURL, F_DOT  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , F_VIRG , F_1    , F_2    , F_3    , F_EQL  , KC_TRNS,
+                                   KC_NO  , KC_NO  , KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, F_0    , KC_NO  , KC_NO  ),
 	[_FUN_FLÈCHES] = LAYOUT(
-        KC_TRNS, KC_NO, KC_F2, KC_F3, KC_F4, KC_PSTE,                                KC_INS, KC_HOME, KC_UP, KC_END, KC_NO, KC_NO,
-        KC_TRNS, KC_F5, KC_F6, KC_F7, KC_F8, KC_COPY,                                KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGUP, KC_NO,
-        KC_TRNS, KC_F9, KC_F10, KC_F11, KC_F12, KC_CUT, KC_NO, KC_NO,  KC_NO, KC_NO, KC_NO, RCTL(KC_LEFT), KC_NO, RCTL(KC_RGHT), KC_PGDN, KC_TRNS,
-                        KC_NO, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS,       KC_NO, KC_NO,  KC_NO, KC_NO, KC_NO),
+        KC_TRNS, KC_NO  , KC_F2  , KC_F3  , KC_F4  , KC_PSTE,                                     KC_INS , KC_HOME, KC_UP  , KC_END , KC_NO  , KC_NO  ,
+        KC_TRNS, KC_F5  , KC_F6  , KC_F7  , KC_F8  , KC_COPY,                                     KC_NO  , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGUP, KC_NO  ,
+        KC_TRNS, KC_F9  , KC_F10 , KC_F11 , KC_F12 , KC_CUT , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , WORDBEF, KC_NO  , WORDAFT, KC_PGDN, KC_TRNS,
+                                   KC_NO  , KC_NO  , KC_TRNS, KC_TRNS, KC_TRNS, KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ),
 	[_FUN_SOURIS] = LAYOUT(
-        KC_NO, KC_NO, KC_F2, KC_F3,  KC_F4,  KC_NO,                               KC_ACL2, KC_BTN2, KC_MS_U, KC_BTN3, KC_NO, KC_NO,
-        KC_NO, KC_F5, KC_F6, KC_F7, KC_F8, KC_NO,                                 KC_ACL1, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_U, KC_NO,
-        KC_NO, KC_F9, KC_F10, KC_F11, KC_F12, KC_NO, KC_NO, KC_NO,  KC_NO, KC_NO, KC_ACL0, KC_WH_L, KC_NO, KC_WH_R, KC_WH_D, KC_NO,
-                      KC_NO, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS,      KC_TRNS, KC_TRNS, KC_BTN1, KC_NO, KC_NO),
+        KC_NO  , KC_NO  , KC_F2  , KC_F3  , KC_F4  , KC_NO  ,                                     KC_ACL2, KC_BTN2, KC_MS_U, KC_BTN3, KC_NO  , KC_NO  ,
+        KC_NO  , KC_F5  , KC_F6  , KC_F7  , KC_F8  , KC_NO  ,                                     KC_ACL1, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_U, KC_NO  ,
+        KC_NO  , KC_F9  , KC_F10 , KC_F11 , KC_F12 , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_ACL0, KC_WH_L, KC_NO  , KC_WH_R, KC_WH_D, KC_NO  ,
+                                   KC_NO  , KC_NO  , KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BTN1, KC_NO  , KC_NO  ),
 	[_ADJUST] = LAYOUT(
-        RGB_HUI, RGB_SAI, RGB_SPI, RGB_MOD, RGB_VAI, OLED_BRI,                      KC_BRIU, KC_VOLU, KC_MNXT, KC_NO, KC_NO, QK_UNICODE_MODE_NEXT,
-        RGB_HUD, RGB_SAD, RGB_SPD, RGB_RMOD, RGB_VAD, OLED_BRD,                     KC_BRID, KC_VOLD, KC_MPLY, KC_NO, KC_NO, KC_NO,
-        KC_NO, KC_NO, KC_NO, KC_NO, RGB_TOG, OLED_TOG, KC_NO, KC_NO,  KC_NO, KC_NO, KC_NO, KC_MUTE, KC_MSTP, KC_NO, KC_NO, KC_NO,
-                      KC_NO, KC_NO, KC_NO, KC_TRNS, KC_TRNS,          KC_TRNS, KC_TRNS, KC_NO, KC_NO, KC_NO)
+        RGB_HUI, RGB_SAI, RGB_SPI, RGB_MOD, RGB_VAI, OLED_BRI,                                    KC_BRIU, KC_VOLU, KC_MNXT, KC_NO  , KC_NO  , QK_UNICODE_MODE_NEXT,
+        RGB_HUD, RGB_SAD, RGB_SPD, RGB_RMOD,RGB_VAD, OLED_BRD,                                    KC_BRID, KC_VOLD, KC_MPLY, KC_NO  , KC_NO  , KC_NO  ,
+        KC_NO  , KC_NO  , KC_NO  , KC_NO  , RGB_TOG, OLED_TOG,KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_MUTE, KC_MSTP, KC_NO  , KC_NO  , KC_NO  ,
+                                   KC_NO  , KC_NO  , KC_NO  , KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO  , KC_NO  , KC_NO  )
 };
 
 void set_both_oled_brightness(uint8_t target) {
