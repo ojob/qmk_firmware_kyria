@@ -60,7 +60,7 @@ enum custom_keycodes { // processed by function `process_record_user`, see below
 };
 
 // Aliases for readability
-#define VERSION  "2024-07-21.2"
+#define VERSION  "2024-08-04.0"
 
 // French keys
 #define F_a KC_Q
@@ -144,9 +144,9 @@ enum custom_keycodes { // processed by function `process_record_user`, see below
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_BÉPO] = LAYOUT(
-        KC_ESC , KC_B   , F_é    , KC_P   , KC_O   , F_è    ,                                     F_w    , KC_V   , KC_D   , KC_L   , KC_J   , F_z    ,
+        KC_NO  , KC_B   , F_é    , KC_P   , KC_O   , F_è    ,                                     F_w    , KC_V   , KC_D   , KC_L   , KC_J   , F_z    ,
         KC_NO  , a_GUI  , u_ALT  , i_SFT  , e_CTL  , F_VIRG ,                                     KC_C   , t_CTL  , s_SFT  , r_ALT  , n_GUI  , F_m    ,
-        KC_NO  , F_à    , KC_Y   , KC_X   , F_DOT  , KC_K   , KC_NO  , KC_NO  , KC_NO  , KC_NO  , F_QUOT , F_q    , KC_G   , KC_H   , KC_F   , KC_ENT ,
+        KC_NO  , F_à    , KC_Y   , KC_X   , F_DOT  , KC_K   , KC_NO  , KC_NO  , KC_NO  , KC_NO  , F_QUOT , F_q    , KC_G   , KC_H   , KC_F   , KC_NO  ,
                                    KC_NO  , KC_NO  , UND_MSE, SPC_ACC, DEL_ARR, BSP_ARR, SPC_SYM, DSH_ADJ, KC_NO  , KC_NO  ),
 	[_ACCENTS] = LAYOUT(
         KC_TRNS, KC_3   , M_É    , F_PARGR, M_œ    , KC_NO  ,                                     KC_NO  , KC_NO  , F_DOLL , KC_NO  , KC_NO  , KC_NO  ,
@@ -173,6 +173,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         RGB_HUD, RGB_SAD, RGB_SPD, RGB_RMOD,RGB_VAD, OLED_BRD,                                    KC_BRID, KC_VOLD, KC_MPLY, KC_NO  , KC_NO  , KC_NO  ,
         KC_NO  , KC_NO  , KC_NO  , KC_NO  , RGB_TOG, OLED_TOG,KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_MUTE, KC_MSTP, KC_NO  , KC_NO  , KC_NO  ,
                                    KC_NO  , KC_NO  , KC_NO  , KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO  , KC_NO  , KC_NO  )
+};
+
+// Combos definition
+const uint16_t PROGMEM combo_esc[] = {KC_B, F_é, COMBO_END};
+const uint16_t PROGMEM combo_tab[] = {LGUI_T(F_a), LALT_T(KC_U), COMBO_END};
+const uint16_t PROGMEM combo_ent[] = {F_q, KC_G, COMBO_END};
+
+combo_t key_combos[] = {
+    COMBO(combo_esc, KC_ESC),
+    COMBO(combo_tab, KC_TAB),
+    COMBO(combo_ent, KC_ENT),
 };
 
 void set_both_oled_brightness(uint8_t target) {
