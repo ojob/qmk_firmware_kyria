@@ -34,4 +34,3 @@ Puis remplacer la carto dans le fichier c
 
 5. Brancher l'autre moitié du clavier, faire double-appui sur le bouton de reset
 6. Quand le dossier est monté, envoyer le fichier vers cette autre moitié
-@ùÀæ?!°ÀÀ?À#ÀÀ$ÀÀÀ$À
