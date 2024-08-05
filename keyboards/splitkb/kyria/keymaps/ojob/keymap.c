@@ -60,7 +60,7 @@ enum custom_keycodes { // processed by function `process_record_user`, see below
 };
 
 // Aliases for readability
-#define VERSION  "2024-08-05.0"
+#define VERSION  "2024-08-05.1"
 
 // French keys
 #define F_a KC_Q
@@ -178,7 +178,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Combos definition
 const uint16_t PROGMEM combo_esc[] = {KC_B, F_é, COMBO_END};
 const uint16_t PROGMEM combo_tab[] = {KC_P, KC_O, COMBO_END};
-const uint16_t PROGMEM combo_ent[] = {F_q, KC_G, COMBO_END};
+const uint16_t PROGMEM combo_ent[] = {KC_V, KC_D, COMBO_END};
 
 combo_t key_combos[] = {
     COMBO(combo_esc, KC_ESC),
